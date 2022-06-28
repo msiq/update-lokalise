@@ -1,11 +1,20 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "Lokalise Sync"
+description: "Sync translations with lokalise.com"
 inputs:
-  milliseconds: # change this
+  api-token:
+    description: "Lokalise Api token"
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  project-id:
+    description: "Lokalise project id"
+    required: true
+  dir-path:
+    description: "translation file dir from project root"
+    required: true
+
+outputs:
+  uploaded-files:
+    description: "Summary of files uploaded"
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
