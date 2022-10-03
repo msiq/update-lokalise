@@ -1,9 +1,10 @@
 /* eslint-disable filenames/match-regex */
-import { LokaliseApi, Project } from '@lokalise/node-api';
+import { LokaliseApi } from '@lokalise/node-api';
+import { Project } from '@lokalise/node-api/dist/models/project';
 
 export default class LokaliseClient {
   api: LokaliseApi | null = null;
-  project: Project | null = null;
+  project: Project | undefined = undefined;
 
   constructor(apiToken: string) {
     this.api = new LokaliseApi({ apiKey: apiToken });
@@ -28,7 +29,7 @@ export default class LokaliseClient {
    * @returns Promise<boolean>
    */
   async uploadFile(fileName: string, base64FileData: string): Promise<boolean> {
-    if (this.api === null || this.project === null) {
+    if (this.api === null || this.project === undefined) {
       // eslint-disable-next-line no-console
       console.log('api or project not set', this.api ?? 'no api', this.project ?? 'no project');
       return false;
@@ -60,7 +61,7 @@ export default class LokaliseClient {
       const interval = setInterval(async () => {
         const reloadedProcess = await this.api?.queuedProcesses().get(processId, { project_id: projectId });
 
-        if (reloadedProcess.status === 'finished') {
+        if (reloadedProcess?.status === 'finished') {
           resolve(reloadedProcess.status);
           clearInterval(interval);
         }
