@@ -1,7 +1,8 @@
 // import * as core from "@actions/core";
 import path from 'path';
 import fs from 'fs';
-import { LokaliseApi, Project } from '@lokalise/node-api';
+import { LokaliseApi } from '@lokalise/node-api';
+import { Project } from '@lokalise/node-api/dist/models/project';
 
 export async function getProject(api: LokaliseApi, projectId: string): Promise<Project> {
   const project = await api.projects().get(projectId);
